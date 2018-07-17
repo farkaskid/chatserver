@@ -1,5 +1,5 @@
 # chatserver
-A simple chat-server implemented using raw tcp sockets.
+A simple chat-server implemented using raw tcp sockets. This is a working prototype/POC for experimental purposes.
 
 It reuses the same socket that was created during the clients registration throughout a single session hence providing real-time pushes from the server.
 
