@@ -7,10 +7,10 @@ It reuses the same socket that was created during the clients registration throu
 Just do `go build` and launch the compiled binary.
 
 ### Usage & Test
-You will need 2 TCP clients, REST clients will not work and they will add a lot of header information that the server is not accepting.
+You will need at least 2 TCP clients, REST clients will not work and they add a lot of header information that the server is not expecting.
 
 1. Start the server. It will start up at port 8000.
-2. Register both clients. Registration process is very trivial and explained below.
+2. Register the clients. Registration process is very trivial and explained below.
     1. Send a TCP request to the server with a single line of plain text(used for client name) as payload.
     2. The server reads a single line from the request and uses this string as a name for the new client.
     3. Server creates a new client with a passed name. Registration is now complete.
@@ -19,7 +19,7 @@ You will need 2 TCP clients, REST clients will not work and they will add a lot 
     1. After registration, clients can exchange messages. A message has the following JSON format:
     ```
     {
-      "Recipients": ["client1", "client2"],
+      "Recipients": ["client1", "client2"...],
       "Content": "Hi, I'm a cow",
     }
     ```
