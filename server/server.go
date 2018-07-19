@@ -7,7 +7,13 @@ import (
 	"chatserver/utils"
 	"log"
 	"net"
+	"strconv"
 	"sync"
+)
+
+const (
+	// SUCCESS Represents successful execution of a task
+	SUCCESS = 0
 )
 
 // Server represents a chatserver
@@ -42,6 +48,10 @@ func (server *Server) handleMessage(m message.Message) {
 		_, err := client.Conn.Write([]byte(m.Content + "\n"))
 		utils.Check(err)
 	}
+
+	senderConn := server.Clients[m.Sender].Conn
+	_, err := senderConn.Write([]byte(strconv.Itoa(SUCCESS) + "\n"))
+	utils.Check(err)
 }
 
 // listenClients listens for new clients
@@ -67,7 +77,10 @@ func (server *Server) addClient(conn net.Conn) {
 	server.Lock()
 	server.Clients[string(name)] = c
 	server.Unlock()
+
 	log.Println("New client:" + string(name) + " is added.")
+	_, err = conn.Write([]byte(strconv.Itoa(SUCCESS) + "\n"))
+	utils.Check(err)
 
 	go c.Start(server.Messages)
 }
